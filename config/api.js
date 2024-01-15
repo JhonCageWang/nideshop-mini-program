@@ -1,11 +1,11 @@
-const ApiRootUrl = 'http://127.0.0.1:8360/api/';
-
+// const ApiRootUrl = 'https://www.itsforher.top/api/';
+const ApiRootUrl = 'http://127.0.0.1:8080/api/user/';
 module.exports = {
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口
   CatalogList: ApiRootUrl + 'catalog/index',  //分类目录全部分类数据接口
   CatalogCurrent: ApiRootUrl + 'catalog/current',  //分类目录当前分类数据接口
 
-  AuthLoginByWeixin: ApiRootUrl + 'auth/loginByWeixin', //微信登录
+  AuthLoginByWeixin: ApiRootUrl + 'weixin/login', //微信登录
 
   GoodsCount: ApiRootUrl + 'goods/count',  //统计商品总数
   GoodsList: ApiRootUrl + 'goods/list',  //获得商品列表
@@ -23,7 +23,7 @@ module.exports = {
   CartUpdate: ApiRootUrl + 'cart/update', // 更新购物车的商品
   CartDelete: ApiRootUrl + 'cart/delete', // 删除购物车的商品
   CartChecked: ApiRootUrl + 'cart/checked', // 选择或取消选择商品
-  CartGoodsCount: ApiRootUrl + 'cart/goodscount', // 获取购物车商品件数
+  CartGoodsCount: ApiRootUrl + 'cart/goods/count', // 获取购物车商品件数
   CartCheckout: ApiRootUrl + 'cart/checkout', // 下单前信息确认
 
   OrderSubmit: ApiRootUrl + 'order/submit', // 提交订单
@@ -59,4 +59,6 @@ module.exports = {
 
   FootprintList: ApiRootUrl + 'footprint/list',  //足迹列表
   FootprintDelete: ApiRootUrl + 'footprint/delete',  //删除足迹
+  Group: ApiRootUrl + 'user/group', 
+  Mobile: ApiRootUrl + 'user/number' //获取手机号
 };

@@ -20,14 +20,43 @@ Page({
     number: 1,
     checkedSpecText: '请选择规格数量',
     openAttr: false,
+    justBuy: false,
     noCollectImage: "/static/images/icon_collect.png",
     hasCollectImage: "/static/images/icon_collect_checked.png",
-    collectBackImage: "/static/images/icon_collect.png"
+    collectBackImage: "/static/images/icon_collect.png",
+    show: false,
+    buttons: [
+        {
+            type: 'default',
+            className: '',
+            text: '辅助操作',
+            value: 0
+        },
+        {
+            type: 'primary',
+            className: '',
+            text: '主操作',
+            value: 1
+        }
+    ]
   },
+  open: function () {
+    this.setData({
+        show: true
+    })
+},
+buttontap(e) {
+    console.log(e.detail)
+},
+halfClose() {
+  this.setData({
+    show: false
+})
+},
   getGoodsInfo: function () {
     let that = this;
     util.request(api.GoodsDetail, { id: that.data.id }).then(function (res) {
-      if (res.errno === 0) {
+      if (res.code === 0) {
         that.setData({
           goods: res.data.info,
           gallery: res.data.gallery,
@@ -187,7 +216,7 @@ Page({
     util.request(api.CartGoodsCount).then(function (res) {
       if (res.errno === 0) {
         that.setData({
-          cartGoodsCount: res.data.cartTotal.goodsCount
+          cartGoodsCount: res.data.goodsCount
         });
 
       }
@@ -219,6 +248,11 @@ Page({
   closeAttr: function () {
     this.setData({
       openAttr: false,
+    });
+  },
+  closeJustBuy: function () {
+    this.setData({
+      justBuy: false,
     });
   },
   addCannelCollect: function () {
@@ -317,6 +351,38 @@ Page({
         });
     }
 
+  },
+  justBuyFunc: function () {
+    var that = this;
+    if (this.data.show === false) {
+      //打开规格选择窗口
+      this.setData({
+        show: !this.data.show,
+      });
+    } else {
+      this.checkoutOrder()
+    }
+  },
+  checkoutOrder: function () {
+    //获取已选择的商品
+    let that = this;
+
+    // var checkedGoods = this.data.cartGoods.filter(function (element, index, array) {
+    //   if (element.checked == true) {
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // });
+
+    // if (checkedGoods.length <= 0) {
+    //   return false;
+    // }
+
+
+    wx.navigateTo({
+      url: '../shopping/checkout/checkout'
+    })
   },
   cutNumber: function () {
     this.setData({

@@ -26,7 +26,7 @@ Page({
   getIndexData: function () {
     let that = this;
     util.request(api.IndexUrl).then(function (res) {
-      if (res.errno === 0) {
+      if (res.code === 0) {
         that.setData({
           newGoods: res.data.newGoodsList,
           hotGoods: res.data.hotGoodsList,
@@ -41,11 +41,11 @@ Page({
   },
   onLoad: function (options) {
     this.getIndexData();
-    util.request(api.GoodsCount).then(res => {
-      this.setData({
-        goodsCount: res.data.goodsCount
-      });
-    });
+    // util.request(api.GoodsCount).then(res => {
+    //   this.setData({
+    //     goodsCount: res.data.goodsCount
+    //   });
+    // });
   },
   onReady: function () {
     // 页面渲染完成
