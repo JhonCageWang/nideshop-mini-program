@@ -8,9 +8,11 @@ Page({
     actualPrice: 0.00
   },
   onLoad: function (options) {
+    options = wx.getStorageSync('orderInfo')
+    console.log('ddd', options)
     // 页面初始化 options为页面跳转所带来的参数
     this.setData({
-      orderId: options.orderId,
+      orderId: options.id,
       actualPrice: options.actualPrice
     })
   },
@@ -32,8 +34,11 @@ Page({
   //向服务请求支付参数
   requestPayParam() {
     let that = this;
-    util.request(api.PayPrepayId, { orderId: that.data.orderId, payType: 1 }).then(function (res) {
-      if (res.errno === 0) {
+    util.request(api.PayPrepayId, {
+      orderId: that.data.orderId,
+      payType: 1
+    }).then(function (res) {
+      if (res.code === 0) {
         let payParam = res.data;
         wx.requestPayment({
           'timeStamp': payParam.timeStamp,
@@ -52,6 +57,16 @@ Page({
             })
           }
         })
+      } else {
+        wx.showToast({
+          image: '/static/images/icon_error.png',
+          title: res.msg,
+          mask: true
+        });
+        setTimeout(function () {
+          wx.navigateBack()
+        }, 2000)
+
       }
     });
   },

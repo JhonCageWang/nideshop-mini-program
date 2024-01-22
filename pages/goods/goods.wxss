@@ -605,9 +605,10 @@
   position: absolute;
   width: 48rpx;
   height: 48rpx;
-  right: 31.25rpx;
+  left: 9rpx;
+  /* right: 31.25rpx; */
   overflow: hidden;
-  top: 31.25rpx;
+  top: 20rpx;
 }
 
 .attr-pop .close .icon {

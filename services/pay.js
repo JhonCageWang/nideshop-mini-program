@@ -14,7 +14,7 @@ function payOrder(orderId) {
       orderId: orderId
     }).then((res) => {
       console.log(res)
-      if (res.errno === 0) {
+      if (res.code === 0) {
         const payParam = res.data;
         wx.requestPayment({
           'timeStamp': payParam.timeStamp,
@@ -43,14 +43,3 @@ function payOrder(orderId) {
 module.exports = {
   payOrder,
 };
-
-
-
-
-
-
-
-
-
-
-

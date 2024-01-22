@@ -17,8 +17,8 @@ Page({
   },
   onShareAppMessage: function () {
     return {
-      title: 'NideShop',
-      desc: '仿网易严选微信小程序商城',
+      title: '超级卖',
+      desc: '低价商品，有中间商赚差价 但不多',
       path: '/pages/index/index'
     }
   },
@@ -59,4 +59,8 @@ Page({
   onUnload: function () {
     // 页面关闭
   },
+  onPullDownRefresh() {
+    this.getIndexData();
+    wx.stopPullDownRefresh()
+  }
 })

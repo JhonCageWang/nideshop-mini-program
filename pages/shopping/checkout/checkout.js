@@ -11,10 +11,10 @@ Page({
     checkedCoupon: [],
     couponList: [],
     goodsTotalPrice: 0.00, //商品总价
-    freightPrice: 0.00,    //快递费
-    couponPrice: 0.00,     //优惠券的价格
-    orderTotalPrice: 0.00,  //订单总价
-    actualPrice: 0.00,     //实际需要支付的总价
+    freightPrice: 0.00, //快递费
+    couponPrice: 0.00, //优惠券的价格
+    orderTotalPrice: 0.00, //订单总价
+    actualPrice: 0.00, //实际需要支付的总价
     addressId: 0,
     couponId: 0
   },
@@ -44,8 +44,12 @@ Page({
   },
   getCheckoutInfo: function () {
     let that = this;
-    util.request(api.CartCheckout, { addressId: that.data.addressId, couponId: that.data.couponId }).then(function (res) {
-      if (res.errno === 0) {
+    util.request(api.CartCheckout, {
+      addressId: that.data.addressId,
+      couponId: that.data.couponId
+
+    }).then(function (res) {
+      if (res.code === 0) {
         console.log(res.data);
         that.setData({
           checkedGoodsList: res.data.checkedGoodsList,
@@ -56,7 +60,8 @@ Page({
           couponPrice: res.data.couponPrice,
           freightPrice: res.data.freightPrice,
           goodsTotalPrice: res.data.goodsTotalPrice,
-          orderTotalPrice: res.data.orderTotalPrice
+          orderTotalPrice: res.data.orderTotalPrice,
+          addressId: res.data.checkedAddress ? res.data.checkedAddress.id : 0
         });
       }
       wx.hideLoading();
@@ -97,9 +102,15 @@ Page({
       util.showErrorToast('请选择收货地址');
       return false;
     }
-    util.request(api.OrderSubmit, { addressId: this.data.addressId, couponId: this.data.couponId }, 'POST').then(res => {
-      if (res.errno === 0) {
-        const orderId = res.data.orderInfo.id;
+    util.request(api.OrderSubmit, {
+      addressId: this.data.addressId,
+      couponId: this.data.couponId,
+      checkoutGoodsInfo: this.data.checkedGoodsList,
+      isCart: true
+
+    }, 'POST').then(res => {
+      if (res.code === 0) {
+        const orderId = res.data.id;
         pay.payOrder(parseInt(orderId)).then(res => {
           wx.redirectTo({
             url: '/pages/payResult/payResult?status=1&orderId=' + orderId
