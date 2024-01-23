@@ -37,6 +37,12 @@ Page({
     // 页面关闭
 
   },
+  onColse: function () {
+    this.setData({
+      isEditCart: false
+    })
+  },
+
   getCartList: function () {
     let that = this;
     util.request(api.CartList).then(function (res) {
@@ -234,7 +240,7 @@ Page({
       return false;
     }
 
-
+    wx.setStorageSync('isCart', true)
     wx.navigateTo({
       url: '../shopping/checkout/checkout'
     })
@@ -257,7 +263,7 @@ Page({
 
     productIds = productIds.map(function (element, index, array) {
       if (element.checked == true) {
-        return element.product_id;
+        return element.productId;
       }
     });
 

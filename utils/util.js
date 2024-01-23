@@ -1,4 +1,5 @@
 var api = require('../config/api.js')
+const app = getApp();
 
 function formatTime(date) {
   var year = date.getFullYear()
@@ -36,17 +37,21 @@ function request(url, data = {}, method = "GET") {
 
         if (res.statusCode == 200) {
 
-          if (res.data.errno == 401) {
+          if (res.data.code == 401) {
             //需要登录后才可以操作
 
             let code = null;
             return login().then((res) => {
-              code = res.code;
+              code = res;
               return getUserInfo();
             }).then((userInfo) => {
               //登录远程服务器
-              request(api.AuthLoginByWeixin, { code: code, userInfo: userInfo }, 'POST').then(res => {
-                if (res.errno === 0) {
+              request(api.AuthLoginByWeixin, {
+                code: code,
+                userInfo: userInfo
+              }, 'POST').then(res => {
+                if (res.code === 0) {
+                  app.globalData.userInfo = res.data.userInfo
                   //存储用户信息
                   wx.setStorageSync('userInfo', res.data.userInfo);
                   wx.setStorageSync('token', res.data.token);
@@ -126,7 +131,7 @@ function getUserInfo() {
     wx.getUserInfo({
       withCredentials: true,
       success: function (res) {
-        if (res.detail.errMsg === 'getUserInfo:ok') {
+        if (res.errMsg === 'getUserInfo:ok') {
           resolve(res);
         } else {
           reject(res)
@@ -172,5 +177,3 @@ module.exports = {
   login,
   getUserInfo,
 }
-
-

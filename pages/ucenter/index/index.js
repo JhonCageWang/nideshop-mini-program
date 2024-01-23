@@ -8,26 +8,27 @@ Page({
     userInfo: {},
     showLoginDialog: false
   },
-  onLoad: function(options) {
+  onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
   },
-  onReady: function() {
+  onReady: function () {
 
   },
-  onShow: function() {
+  onShow: function () {
+    console.log(app.globalData.userInfo)
     this.setData({
       userInfo: app.globalData.userInfo,
     });
   },
-  onHide: function() {
+  onHide: function () {
     // 页面隐藏
 
   },
-  onUnload: function() {
+  onUnload: function () {
     // 页面关闭
   },
 
-  onUserInfoClick: function() {
+  onUserInfoClick: function () {
     if (wx.getStorageSync('token')) {
 
     } else {
@@ -41,13 +42,13 @@ Page({
     })
   },
 
-  onCloseLoginDialog () {
+  onCloseLoginDialog() {
     this.setData({
       showLoginDialog: false
     })
   },
 
-  onDialogBody () {
+  onDialogBody() {
     // 阻止冒泡
   },
 
@@ -88,23 +89,23 @@ Page({
     })
   },
 
-  onOrderInfoClick: function(event) {
+  onOrderInfoClick: function (event) {
     wx.navigateTo({
       url: '/pages/ucenter/order/order',
     })
   },
 
-  onSectionItemClick: function(event) {
+  onSectionItemClick: function (event) {
 
   },
 
   // TODO 移到个人信息页面
-  exitLogin: function() {
+  exitLogin: function () {
     wx.showModal({
       title: '',
       confirmColor: '#b4282d',
       content: '退出登录？',
-      success: function(res) {
+      success: function (res) {
         if (res.confirm) {
           wx.removeStorageSync('token');
           wx.removeStorageSync('userInfo');

@@ -19,6 +19,7 @@ Page({
     userHasCollect: 0,
     number: 1,
     checkedSpecText: '请选择规格数量',
+    checkedProductPrice: null,
     openAttr: false,
     justBuy: false,
     noCollectImage: "/static/images/icon_collect.png",
@@ -62,6 +63,7 @@ Page({
       id: that.data.id
     }).then(function (res) {
       if (res.code === 0) {
+
         that.setData({
           goods: res.data.info,
           gallery: res.data.gallery,
@@ -84,9 +86,8 @@ Page({
           });
         }
 
-        WxParse.wxParse('goodsDetail', 'html', res.data.info.goods_desc, that);
-
-        that.getGoodsRelated();
+        WxParse.wxParse('goodsDetail', 'html', res.data.info.goodsDesc, that);
+        // that.getGoodsRelated();
       }
     });
 
@@ -114,7 +115,7 @@ Page({
     //TODO 性能优化，可在wx:for中添加index，可以直接获取点击的属性名和属性值，不用循环
     let _specificationList = this.data.specificationList;
     for (let i = 0; i < _specificationList.length; i++) {
-      if (_specificationList[i].specification_id == specNameId) {
+      if (_specificationList[i].specificationId == specNameId) {
         for (let j = 0; j < _specificationList[i].valueList.length; j++) {
           if (_specificationList[i].valueList[j].id == specValueId) {
             //如果已经选中，则反选
@@ -181,7 +182,13 @@ Page({
   },
   changeSpecInfo: function () {
     let checkedNameValue = this.getCheckedSpecValue();
-
+    let key = this.getCheckedSpecKey()
+    let checkedList = this.getCheckedProductItem(key)
+    if (checkedList.length > 0) {
+      this.setData({
+        checkedProductPrice: checkedList[0].retailPrice
+      })
+    }
     //设置选择的信息
     let checkedValue = checkedNameValue.filter(function (v) {
       if (v.valueId != 0) {
@@ -228,11 +235,9 @@ Page({
 
       }
     });
-  },
-  onReady: function () {
-    // 页面渲染完成
 
   },
+
   onShow: function () {
     // 页面显示
 
@@ -382,7 +387,12 @@ Page({
     }
     //直接购买
     if (this.data.isBuy) {
-
+      wx.setStorageSync('justBudProductId', checkedProduct[0].id)
+      wx.setStorageSync('justBudnumber', this.data.number)
+      wx.setStorageSync('isCart', false)
+      wx.navigateTo({
+        url: '../shopping/checkout/checkout'
+      })
     }
 
   },
@@ -417,5 +427,9 @@ Page({
     this.setData({
       number: this.data.number + 1
     });
-  }
+  },
+  onReady: function () {
+    // 页面渲染完成
+    this.changeSpecInfo()
+  },
 })

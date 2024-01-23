@@ -16,13 +16,20 @@ Page({
     orderTotalPrice: 0.00, //订单总价
     actualPrice: 0.00, //实际需要支付的总价
     addressId: 0,
-    couponId: 0
+    couponId: 0,
+    productId: null,
+    number: 1,
+    isCart: true
   },
   onLoad: function (options) {
 
     // 页面初始化 options为页面跳转所带来的参数
 
     try {
+      var isCart = wx.getStorageSync('isCart');
+      this.setData({
+        'isCart': isCart
+      });
       var addressId = wx.getStorageSync('addressId');
       if (addressId) {
         this.setData({
@@ -36,6 +43,18 @@ Page({
           'couponId': couponId
         });
       }
+      var productId = wx.getStorageSync('justBudProductId');
+      if (productId) {
+        this.setData({
+          'productId': productId
+        });
+      }
+      var number = wx.getStorageSync('justBudnumber');
+      if (number) {
+        this.setData({
+          'number': number
+        });
+      }
     } catch (e) {
       // Do something when catch error
     }
@@ -46,7 +65,9 @@ Page({
     let that = this;
     util.request(api.CartCheckout, {
       addressId: that.data.addressId,
-      couponId: that.data.couponId
+      couponId: that.data.couponId,
+      productId: that.data.productId || '',
+      number: that.data.number,
 
     }).then(function (res) {
       if (res.code === 0) {
@@ -106,7 +127,7 @@ Page({
       addressId: this.data.addressId,
       couponId: this.data.couponId,
       checkoutGoodsInfo: this.data.checkedGoodsList,
-      isCart: true
+      isCart: this.data.isCart
 
     }, 'POST').then(res => {
       if (res.code === 0) {
