@@ -10,15 +10,16 @@ Page({
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
+    console.log(app.globalData.userInfo)
+    this.setData({
+      userInfo: app.globalData.userInfo,
+    });
   },
   onReady: function () {
 
   },
   onShow: function () {
-    console.log(app.globalData.userInfo)
-    this.setData({
-      userInfo: app.globalData.userInfo,
-    });
+
   },
   onHide: function () {
     // 页面隐藏

@@ -21,12 +21,25 @@ Page({
       title: '加载中...',
     });
     util.request(api.CatalogList).then(function (res) {
-        that.setData({
-          navList: res.data.categoryList,
-          currentCategory: res.data.currentCategory
-        });
-        wx.hideLoading();
+      that.setData({
+        navList: res.data.categoryList,
+        currentCategory: res.data.currentCategory
       });
+      wx.hideLoading();
+    }, function (res) {
+      if (res.data.code == 401) {
+        wx.showModal({
+          title: '登录过期 请下拉刷新重试',
+          content: '',
+          complete: (res) => {
+            if (res.cancel) {}
+            if (res.confirm) {
+              that.onPullDownRefresh()
+            }
+          }
+        })
+      }
+    });
     util.request(api.GoodsCount).then(function (res) {
       that.setData({
         goodsCount: res.data.goodsCount
@@ -36,7 +49,9 @@ Page({
   },
   getCurrentCategory: function (id) {
     let that = this;
-    util.request(api.CatalogCurrent, { id: id })
+    util.request(api.CatalogCurrent, {
+        id: id
+      })
       .then(function (res) {
         that.setData({
           currentCategory: res.data.currentCategory
@@ -72,5 +87,8 @@ Page({
     }
 
     this.getCurrentCategory(event.currentTarget.dataset.id);
-  }
+  },
+  onPullDownRefresh: function () {
+    this.getCatalog()
+  },
 })

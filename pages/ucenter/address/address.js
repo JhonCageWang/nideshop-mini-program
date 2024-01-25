@@ -17,23 +17,25 @@ Page({
     // 页面显示
 
   },
-  getAddressList (){
+  getAddressList() {
     let that = this;
     util.request(api.AddressList).then(function (res) {
-      if (res.errno === 0) {
+      if (res.code === 0) {
         that.setData({
           addressList: res.data
         });
       }
     });
   },
-  addressAddOrUpdate (event) {
+  //url: '/pages/ucenter/addressAdd/addressAdd?id=' + event.currentTarget.dataset.addressId
+  // addressAdd
+  addressAddOrUpdate(event) {
     console.log(event)
     wx.navigateTo({
       url: '/pages/ucenter/addressAdd/addressAdd?id=' + event.currentTarget.dataset.addressId
     })
   },
-  deleteAddress(event){
+  deleteAddress(event) {
     console.log(event.target)
     let that = this;
     wx.showModal({
@@ -42,8 +44,10 @@ Page({
       success: function (res) {
         if (res.confirm) {
           let addressId = event.target.dataset.addressId;
-          util.request(api.AddressDelete, { id: addressId }, 'POST').then(function (res) {
-            if (res.errno === 0) {
+          util.request(api.AddressDelete, {
+            id: addressId
+          }, 'POST').then(function (res) {
+            if (res.code === 0) {
               that.getAddressList();
             }
           });
@@ -52,7 +56,7 @@ Page({
       }
     })
     return false;
-    
+
   },
   onHide: function () {
     // 页面隐藏

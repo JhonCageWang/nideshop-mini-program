@@ -4,7 +4,7 @@ var app = getApp();
 Page({
   data: {
     address: {
-      id:0,
+      id: 0,
       province_id: 0,
       city_id: 0,
       district_id: 0,
@@ -16,10 +16,24 @@ Page({
     },
     addressId: 0,
     openSelectRegion: false,
-    selectRegionList: [
-      { id: 0, name: '省份', parent_id: 1, type: 1 },
-      { id: 0, name: '城市', parent_id: 1, type: 2 },
-      { id: 0, name: '区县', parent_id: 1, type: 3 }
+    selectRegionList: [{
+        id: 0,
+        name: '省份',
+        parent_id: 1,
+        type: 1
+      },
+      {
+        id: 0,
+        name: '城市',
+        parent_id: 1,
+        type: 2
+      },
+      {
+        id: 0,
+        name: '区县',
+        parent_id: 1,
+        type: 3
+      }
     ],
     regionType: 1,
     regionList: [],
@@ -39,14 +53,14 @@ Page({
       address: address
     });
   },
-  bindinputAddress (event){
+  bindinputAddress(event) {
     let address = this.data.address;
     address.address = event.detail.value;
     this.setData({
       address: address
     });
   },
-  bindIsDefault(){
+  bindIsDefault() {
     let address = this.data.address;
     address.is_default = !address.is_default;
     this.setData({
@@ -55,7 +69,9 @@ Page({
   },
   getAddressDetail() {
     let that = this;
-    util.request(api.AddressDetail, { id: that.data.addressId }).then(function (res) {
+    util.request(api.AddressDetail, {
+      id: that.data.addressId
+    }).then(function (res) {
       if (res.errno === 0) {
         that.setData({
           address: res.data
@@ -104,10 +120,24 @@ Page({
       this.getRegionList(address.city_id);
     } else {
       this.setData({
-        selectRegionList: [
-          { id: 0, name: '省份', parent_id: 1, type: 1 },
-          { id: 0, name: '城市', parent_id: 1, type: 2 },
-          { id: 0, name: '区县', parent_id: 1, type: 3 }
+        selectRegionList: [{
+            id: 0,
+            name: '省份',
+            parent_id: 1,
+            type: 1
+          },
+          {
+            id: 0,
+            name: '城市',
+            parent_id: 1,
+            type: 2
+          },
+          {
+            id: 0,
+            name: '区县',
+            parent_id: 1,
+            type: 3
+          }
         ],
         regionType: 1
       })
@@ -139,14 +169,14 @@ Page({
     let selectRegionList = that.data.selectRegionList;
 
     //判断是否可点击
-    if (regionTypeIndex + 1 == this.data.regionType || (regionTypeIndex - 1 >= 0 && selectRegionList[regionTypeIndex-1].id <= 0)) {
+    if (regionTypeIndex + 1 == this.data.regionType || (regionTypeIndex - 1 >= 0 && selectRegionList[regionTypeIndex - 1].id <= 0)) {
       return false;
     }
 
     this.setData({
       regionType: regionTypeIndex + 1
     })
-    
+
     let selectRegionItem = selectRegionList[regionTypeIndex];
 
     this.getRegionList(selectRegionItem.parent_id);
@@ -214,13 +244,13 @@ Page({
 
     let address = this.data.address;
     let selectRegionList = this.data.selectRegionList;
-    address.province_id = selectRegionList[0].id;
-    address.city_id = selectRegionList[1].id;
-    address.district_id = selectRegionList[2].id;
-    address.province_name = selectRegionList[0].name;
-    address.city_name = selectRegionList[1].name;
-    address.district_name = selectRegionList[2].name;
-    address.full_region = selectRegionList.map(item => {
+    address.provinceId = selectRegionList[0].id;
+    address.cityId = selectRegionList[1].id;
+    address.districtId = selectRegionList[2].id;
+    address.provinceName = selectRegionList[0].name;
+    address.cityName = selectRegionList[1].name;
+    address.districtName = selectRegionList[2].name;
+    address.fullRegion = selectRegionList.map(item => {
       return item.name;
     }).join('');
 
@@ -240,7 +270,9 @@ Page({
   getRegionList(regionId) {
     let that = this;
     let regionType = that.data.regionType;
-    util.request(api.RegionList, { parentId: regionId }).then(function (res) {
+    util.request(api.RegionList, {
+      parentId: regionId
+    }).then(function (res) {
       if (res.errno === 0) {
         that.setData({
           regionList: res.data.map(item => {
@@ -258,12 +290,12 @@ Page({
       }
     });
   },
-  cancelAddress(){
+  cancelAddress() {
     wx.reLaunch({
       url: '/pages/shopping/address/address',
     })
   },
-  saveAddress(){
+  saveAddress() {
     console.log(this.data.address)
     let address = this.data.address;
 
@@ -291,7 +323,7 @@ Page({
 
 
     let that = this;
-    util.request(api.AddressSave, { 
+    util.request(api.AddressSave, {
       id: address.id,
       name: address.name,
       mobile: address.mobile,

@@ -185,7 +185,7 @@ Page({
     util.request(api.CartUpdate, {
       productId: productId,
       goodsId: goodsId,
-      number: number,
+      num: number,
       cartId: id
     }, 'POST').then(function (res) {
       if (res.msg === 0) {
@@ -211,7 +211,7 @@ Page({
     this.setData({
       cartGoods: this.data.cartGoods
     });
-    this.updateCart(cartItem.product_id, cartItem.goods_id, number, cartItem.id);
+    this.updateCart(cartItem.productId, cartItem.goodsId, number, cartItem.cartId);
   },
   addNumber: function (event) {
     let itemIndex = event.target.dataset.itemIndex;
@@ -221,7 +221,7 @@ Page({
     this.setData({
       cartGoods: this.data.cartGoods
     });
-    this.updateCart(cartItem.product_id, cartItem.goods_id, number, cartItem.id);
+    this.updateCart(cartItem.productId, cartItem.goodsId, number, cartItem.cartId);
 
   },
   checkoutOrder: function () {
@@ -289,5 +289,9 @@ Page({
         checkedAllStatus: that.isCheckedAll()
       });
     });
+  },
+  onPullDownRefresh() {
+    this.getCartList();
+    wx.stopPullDownRefresh()
   }
 })

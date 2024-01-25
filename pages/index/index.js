@@ -39,13 +39,13 @@ Page({
       }
     });
   },
-  onLoad: function (options) {
+  onLoad: function (options) {  
     this.getIndexData();
-    // util.request(api.GoodsCount).then(res => {
-    //   this.setData({
-    //     goodsCount: res.data.goodsCount
-    //   });
-    // });
+    util.request(api.GoodsCount).then(res => {
+      this.setData({
+        goodsCount: res.data.goodsCount
+      });
+    });
   },
   onReady: function () {
     // 页面渲染完成
@@ -60,7 +60,7 @@ Page({
     // 页面关闭
   },
   onPullDownRefresh() {
-    this.getIndexData();
+    this.onLoad()
     wx.stopPullDownRefresh()
   }
 })

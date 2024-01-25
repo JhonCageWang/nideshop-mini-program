@@ -6,6 +6,7 @@
     "pages/hotGoods/hotGoods",
     "pages/ucenter/address/address",
     "pages/ucenter/addressAdd/addressAdd",
+    "pages/ucenter/newAddress/addressAdd",
     "pages/ucenter/footprint/footprint",
     "pages/ucenter/order/order",
     "pages/ucenter/orderDetail/orderDetail",
@@ -46,8 +47,7 @@
     "borderStyle": "white",
     "selectedColor": "#b4282d",
     "color": "#666",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/index/index",
         "iconPath": "static/images/ic_menu_choice_nor.png",
         "selectedIconPath": "static/images/ic_menu_choice_pressed.png",
@@ -80,6 +80,15 @@
   "useExtendedLib": {
     "kbone": true,
     "weui": true
+  },
+  "requiredPrivateInfos": [
+    "chooseAddress",
+    "chooseLocation"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
   },
   "debug": true
 }

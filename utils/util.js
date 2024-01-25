@@ -55,8 +55,11 @@ function request(url, data = {}, method = "GET") {
                   //存储用户信息
                   wx.setStorageSync('userInfo', res.data.userInfo);
                   wx.setStorageSync('token', res.data.token);
-
-                  resolve(res);
+                  reject({
+                    data: {
+                      "code": 401
+                    }
+                  });
                 } else {
                   reject(res);
                 }
