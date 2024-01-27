@@ -578,6 +578,7 @@
   text-align: center;
   color: #fff;
 }
+
 @import "../../lib/wxParse/wxParse.wxss";
 
 .attr-pop-box {
@@ -724,4 +725,20 @@
   height: 100%;
   text-align: center;
   line-height: 65rpx;
+}
+
+.btn-bottom {
+  background: #b4282d;
+  text-align: center;
+  width: 100%;
+  height: 99rpx;
+  line-height: 99rpx;
+  position: fixed;
+  border-radius: 0;
+  border: none;
+  color: #fff;
+  font-size: 29rpx;
+  bottom: 0;
+  left: 0;
+
 }

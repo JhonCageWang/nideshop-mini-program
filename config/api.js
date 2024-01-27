@@ -1,5 +1,6 @@
 // const ApiRootUrl = 'https://www.itsforher.top/api/';
-const ApiRootUrl = 'http://172.172.8.31:8080/api/user/';
+const ApiRootUrl = 'http://127.0.0.1:8080/api/user/';
+// const ApiRootUrl = 'http://172.172.8.31:8080/api/user/';
 module.exports = {
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口
   CatalogList: ApiRootUrl + 'category/index', //分类目录全部分类数据接口
@@ -30,8 +31,8 @@ module.exports = {
   PayPrepayId: ApiRootUrl + 'pay/prepay', //获取微信统一下单prepay_id
 
   CollectList: ApiRootUrl + 'collect/list', //收藏列表
-  CollectAddOrDelete: ApiRootUrl + 'collect/addordelete', //添加或取消收藏
-
+  CollectAddOrDelete: ApiRootUrl + 'collect/delete', //添加或取消收藏
+  CollectAdd: ApiRootUrl + 'collect/add', //添加收藏
   CommentList: ApiRootUrl + 'comment/list', //评论列表
   CommentCount: ApiRootUrl + 'comment/count', //评论总数
   CommentPost: ApiRootUrl + 'comment/post', //发表评论

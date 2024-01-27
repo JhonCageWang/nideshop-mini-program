@@ -40,7 +40,8 @@ Page({
       }
     ],
     isCart: false,
-    isBuy: false
+    isBuy: false,
+    collect: true
   },
   open: function () {
     this.setData({
@@ -78,11 +79,13 @@ Page({
 
         if (res.data.userHasCollect == 1) {
           that.setData({
-            'collectBackImage': that.data.hasCollectImage
+            'collectBackImage': that.data.hasCollectImage,
+            'collect': false
           });
         } else {
           that.setData({
-            'collectBackImage': that.data.noCollectImage
+            'collectBackImage': that.data.noCollectImage,
+            'collect': true
           });
         }
 
@@ -251,9 +254,9 @@ Page({
 
   },
   switchAttrPop: function () {
-    if (this.data.openAttr == false) {
+    if (this.data.show == false) {
       this.setData({
-        openAttr: !this.data.openAttr
+        show: !this.data.show
       });
     }
   },
@@ -267,32 +270,55 @@ Page({
   },
   addCannelCollect: function () {
     let that = this;
-    //添加或是取消收藏
-    util.request(api.CollectAddOrDelete, {
-        typeId: 0,
-        valueId: this.data.id
-      }, "POST")
-      .then(function (res) {
-        let _res = res;
-        if (_res.errno == 0) {
-          if (_res.data.type == 'add') {
+    if (this.data.collect) {
+      //添加或是取消收藏
+      util.request(api.CollectAdd, {
+          typeId: 0,
+          valueId: this.data.id
+        }, "POST")
+        .then(function (res) {
+          let _res = res;
+          if (_res.code == 0) {
             that.setData({
-              'collectBackImage': that.data.hasCollectImage
+              'collectBackImage': that.data.hasCollectImage,
+              'collect': false
             });
+            wx.showToast({
+              title: '已收藏'
+            })
           } else {
-            that.setData({
-              'collectBackImage': that.data.noCollectImage
+            wx.showToast({
+              image: '/static/images/icon_error.png',
+              title: _res.errmsg,
+              mask: true
             });
           }
+        });
+    } else {
+      util.request(api.CollectAddOrDelete, {
+          typeId: 0,
+          valueId: this.data.id
+        }, "POST")
+        .then(function (res) {
+          let _res = res;
+          if (_res.code == 0) {
+            that.setData({
+              'collectBackImage': that.data.noCollectImage,
+              'collect': true
+            });
+            wx.showToast({
+              title: '已取消收藏'
+            })
+          } else {
+            wx.showToast({
+              image: '/static/images/icon_error.png',
+              title: _res.errmsg,
+              mask: true
+            });
+          }
+        });
+    }
 
-        } else {
-          wx.showToast({
-            image: '/static/images/icon_error.png',
-            title: _res.errmsg,
-            mask: true
-          });
-        }
-      });
   },
   openCartPage: function () {
     wx.switchTab({

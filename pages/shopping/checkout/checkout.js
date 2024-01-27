@@ -126,7 +126,7 @@ Page({
     util.request(api.OrderSubmit, {
       addressId: this.data.addressId,
       couponId: this.data.couponId,
-      checkoutGoodsInfo: this.data.checkedGoodsList,
+      checkoutGoodsList: this.data.checkedGoodsList,
       isCart: this.data.isCart
 
     }, 'POST').then(res => {

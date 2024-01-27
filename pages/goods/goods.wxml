@@ -21,10 +21,10 @@
       </view>
     </view>
   </view>
-  <view class="section-nav section-attr" bindtap="switchAttrPop">
+  <!-- <view class="section-nav section-attr" bindtap="switchAttrPop">
     <view class="t">请选择规格数量</view>
     <image class="i" src="../../static/images/address_right.png" background-size="cover"></image>
-  </view>
+  </view> -->
   <!--<view class="section-nav section-act">
       <view class="t">
         <view class="label">1个促销:</view>
@@ -157,7 +157,7 @@
           </view>
 
         </view>
-        <button type="warn" bindtap="createOrderOrAddCart">确定</button>
+        <button type="warn" class="btn-bottom" bindtap="createOrderOrAddCart">确定</button>
 
       </view>
     </view>

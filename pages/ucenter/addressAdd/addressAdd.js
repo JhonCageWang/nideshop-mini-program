@@ -12,7 +12,7 @@ Page({
       full_region: '',
       name: '',
       mobile: '',
-      is_default: 0
+      isDefault: 0
     },
     addressId: 0,
     openSelectRegion: false,
@@ -62,7 +62,7 @@ Page({
   },
   bindIsDefault() {
     let address = this.data.address;
-    address.is_default = !address.is_default;
+    address.isDefault = !address.isDefault;
     this.setData({
       address: address
     });
@@ -290,9 +290,7 @@ Page({
     });
   },
   cancelAddress() {
-    wx.navigateTo({
-      url: '/pages/ucenter/address/address',
-    })
+    wx.navigateBack()
   },
   saveAddress() {
     console.log(this.data.address)
@@ -310,7 +308,7 @@ Page({
     }
 
 
-    if (address.district_id == 0) {
+    if (address.districtId == 0) {
       util.showErrorToast('请输入省市区');
       return false;
     }
@@ -330,12 +328,10 @@ Page({
       cityId: address.cityId,
       districtId: address.districtId,
       address: address.address,
-      isDefault: address.isDefault,
+      isDefault: address.isDefault ? 1 : 0,
     }, 'POST').then(function (res) {
       if (res.code === 0) {
-        wx.navigateTo({
-          url: '/pages/ucenter/address/address',
-        })
+        wx.navigateBack()
       }
     });
 

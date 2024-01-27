@@ -12,15 +12,15 @@ Page({
   getFootprintList() {
     let that = this;
     util.request(api.FootprintList).then(function (res) {
-      if (res.errno === 0) {
+      if (res.code === 0) {
         console.log(res.data);
         that.setData({
-          footprintList: res.data.data
+          footprintList: res.data
         });
       }
     });
   },
-  deleteItem (event){
+  deleteItem(event) {
     let that = this;
     let footprint = event.currentTarget.dataset.footprint;
     var touchTime = that.data.touch_end - that.data.touch_start;
@@ -32,8 +32,10 @@ Page({
         content: '要删除所选足迹？',
         success: function (res) {
           if (res.confirm) {
-            util.request(api.FootprintDelete, { footprintId: footprint.id }, 'POST').then(function (res) {
-              if (res.errno === 0) {
+            util.request(api.FootprintDelete, {
+              footprintId: footprint.id
+            }, 'POST').then(function (res) {
+              if (res.code === 0) {
                 wx.showToast({
                   title: '删除成功',
                   icon: 'success',
@@ -51,7 +53,7 @@ Page({
         url: '/pages/goods/goods?id=' + footprint.goods_id,
       });
     }
-    
+
   },
   onLoad: function (options) {
     this.getFootprintList();
@@ -84,5 +86,5 @@ Page({
       touch_end: e.timeStamp
     })
     console.log(e.timeStamp + '- touch-end')
-  }, 
+  },
 })
