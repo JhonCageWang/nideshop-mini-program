@@ -4,6 +4,7 @@ var api = require('../../../config/api.js');
 Page({
   data: {
     orderId: 0,
+    address: {},
     orderInfo: {},
     orderGoods: [],
     handleOption: {}
@@ -20,12 +21,13 @@ Page({
     util.request(api.OrderDetail, {
       orderId: that.data.orderId
     }).then(function (res) {
-      if (res.errno === 0) {
+      if (res.code === 0) {
         console.log(res.data);
         that.setData({
-          orderInfo: res.data.orderInfo,
-          orderGoods: res.data.orderGoods,
-          handleOption: res.data.handleOption
+          orderInfo: res.data,
+          orderGoods: res.data.goodsList,
+          handleOption: res.data.handleOption,
+          address: res.data.address
         });
         //that.payTimer();
       }
@@ -48,7 +50,7 @@ Page({
     util.request(api.PayPrepayId, {
       orderId: that.data.orderId || 15
     }).then(function (res) {
-      if (res.errno === 0) {
+      if (res.code === 0) {
         const payParam = res.data;
         wx.requestPayment({
           'timeStamp': payParam.timeStamp,
@@ -63,6 +65,23 @@ Page({
             console.log(res)
           }
         });
+      }
+    });
+
+  },
+  cancelOrder: function () {
+    let that = this;
+    util.request(api.OrderCancel, {
+      orderId: that.data.orderId
+    }, "POST").then(function (res) {
+      if (res.code === 0) {
+        console.log(res.data);
+        wx.showToast({
+          title: '取消成功',
+        })
+        setTimeout(function () {
+          wx.navigateBack()
+        }, 2000)
       }
     });
 

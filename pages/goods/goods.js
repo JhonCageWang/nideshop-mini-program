@@ -47,6 +47,7 @@ Page({
     this.setData({
       show: true
     })
+    this.changeSpecInfo()
   },
   buttontap(e) {
     console.log(e.detail)
@@ -332,6 +333,7 @@ Page({
         show: !this.data.show,
         isCart: true
       });
+      this.changeSpecInfo()
     }
   },
   justBuyFunc: function () {
@@ -341,6 +343,7 @@ Page({
         show: !this.data.show,
         isBuy: true
       });
+      this.changeSpecInfo()
     }
   },
 
