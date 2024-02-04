@@ -1,4 +1,4 @@
-// pages/ucenter/newAddressAdd/addressAdd.js
+// pages/shopping/coupoon/coupon.js
 Page({
 
     /**

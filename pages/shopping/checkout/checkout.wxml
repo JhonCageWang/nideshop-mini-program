@@ -23,11 +23,15 @@
         </view>
     </view>
 
-    <view class="coupon-box">
-        <view class="coupon-item">
-            <view class="l">
-                <text class="name">请选择优惠券</text>
-                <text class="txt">{{couponList.length}}张</text>
+    <view class="coupon-box" wx:if="{{couponCount>0}}">
+        <view class="coupon-item" bindtap="selectCoupon">
+            <view class="l" wx:if="{{checkedCoupon}}">
+                <text class=" name">已选择优惠券</text>
+                <text class="txt">{{checkedCoupon.descStr}}</text>
+            </view>
+            <view class="l" wx:if="{{!checkedCoupon}}">
+                <text class=" name">请选择优惠券</text>
+                <text class="txt">{{couponCount}}张</text>
             </view>
             <view class="r">
                 <image src="/static/images/address_right.png"></image>
@@ -65,7 +69,7 @@
     <view class="goods-items">
         <view class="item" wx:for="{{checkedGoodsList}}" wx:key="{{item.id}}">
             <view class="img">
-                <image src="{{item.listPicUrl}}"></image>
+                <image src="{{item.picUrl}}"></image>
             </view>
             <view class="info">
                 <view class="t">

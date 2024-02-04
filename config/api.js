@@ -1,5 +1,5 @@
-// const ApiRootUrl = 'https://www.itsforher.top/api/user/';
-const ApiRootUrl = 'http://127.0.0.1:8080/api/user/';
+const ApiRootUrl = 'https://www.itsforher.top/api/user/';
+// const ApiRootUrl = 'http://127.0.0.1:8080/api/user/';
 // const ApiRootUrl = 'http://172.172.8.31:8080/api/user/';
 module.exports = {
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口
@@ -25,7 +25,8 @@ module.exports = {
   CartDelete: ApiRootUrl + 'cart/delete', // 删除购物车的商品
   CartChecked: ApiRootUrl + 'cart/checked', // 选择或取消选择商品
   CartGoodsCount: ApiRootUrl + 'cart/goods/count', // 获取购物车商品件数
-  CartCheckout: ApiRootUrl + 'cart/checkout', // 下单前信息确认
+  CartCheckout: ApiRootUrl + 'cart/checkout',
+  CouponsList: ApiRootUrl + 'coupon/list', // 下单前信息确认
 
   OrderSubmit: ApiRootUrl + 'order/submit', // 提交订单
   PayPrepayId: ApiRootUrl + 'pay/prepay', //获取微信统一下单prepay_id

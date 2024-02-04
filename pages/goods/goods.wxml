@@ -122,7 +122,7 @@
   <view class="c" bindtap="addToCart">加入购物车</view>
   <view class="r" bindtap="justBuyFunc">立即购买</view>
   <mp-half-screen-dialog close="{{true}}" bindbuttontap="buttontap" show="{{show}}" bindclose="halfClose">
-    <view slot="desc" style="height: 1000rpx;">
+    <view slot="desc">
       <view class="attr-pop-box">
 
         <view class="attr-pop">

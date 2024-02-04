@@ -81,7 +81,7 @@ Page({
                 success: res => {
                   if (res.confirm) {
                     wx.openSetting({
-
+                      
                     })
                   }
                 }

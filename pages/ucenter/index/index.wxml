@@ -74,13 +74,15 @@
 </view>
 
 
-<!-- <view class="logout" bindtap="exitLogin">退出登录</view>
+<view class="logout" bindtap="exitLogin">退出登录</view>
 <view class='dialog-login' wx:if="{{showLoginDialog}}" bindtap='onCloseLoginDialog'>
   <view class='dialog-body' catchtap='onDialogBody'>
     <view class='title'>请选择登录方式</view>
     <view class='content'>
-      <button type="primary" open-type="getUserInfo" bindgetuserinfo="onWechatLogin">微信登录</button>
+      <button type="primary" open-type="chooseAvatar" bind:chooseavatar="getUserProfile">使用微信头像</button>
       <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onWechatLogin">手机号登录</button>
     </view>
   </view>
-</view> -->
+</view>
+
+<!-- bindgetuserinfo="onWechatLogin" -->

@@ -8,18 +8,15 @@ Page({
     userInfo: {},
     showLoginDialog: false
   },
-  onLoad: function (options) {
-    // 页面初始化 options为页面跳转所带来的参数
-    console.log(app.globalData.userInfo)
-    this.setData({
-      userInfo: app.globalData.userInfo,
-    });
-  },
+  onLoad: function (options) {},
   onReady: function () {
 
   },
   onShow: function () {
-
+    let userInfo = wx.getStorageSync('userInfo')
+    this.setData({
+      userInfo: userInfo,
+    });
   },
   onHide: function () {
     // 页面隐藏
@@ -30,6 +27,7 @@ Page({
   },
 
   onUserInfoClick: function () {
+    this.showLoginDialog();
     if (wx.getStorageSync('token')) {
 
     } else {
@@ -89,7 +87,9 @@ Page({
       console.log(err)
     })
   },
-
+  getUserProfile: function (e) {
+    console.log("asdfasd", e)
+  },
   onOrderInfoClick: function (event) {
     wx.navigateTo({
       url: '/pages/ucenter/order/order',

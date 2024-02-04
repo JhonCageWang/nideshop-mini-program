@@ -8,7 +8,7 @@ Page({
   data: {
     checkedGoodsList: [],
     checkedAddress: {},
-    checkedCoupon: [],
+    checkedCoupon: {},
     couponList: [],
     goodsTotalPrice: 0.00, //商品总价
     freightPrice: 0.00, //快递费
@@ -37,7 +37,7 @@ Page({
         });
       }
 
-      var couponId = wx.getStorageSync('couponId');
+      var couponId = wx.getStorageSync('userCouponId');
       if (couponId) {
         this.setData({
           'couponId': couponId
@@ -77,12 +77,13 @@ Page({
           checkedAddress: res.data.checkedAddress,
           actualPrice: res.data.actualPrice,
           checkedCoupon: res.data.checkedCoupon,
-          couponList: res.data.couponList,
+          couponCount: res.data.couponCount,
           couponPrice: res.data.couponPrice,
           freightPrice: res.data.freightPrice,
           goodsTotalPrice: res.data.goodsTotalPrice,
           orderTotalPrice: res.data.orderTotalPrice,
-          addressId: res.data.checkedAddress ? res.data.checkedAddress.id : 0
+          addressId: res.data.checkedAddress ? res.data.checkedAddress.id : 0,
+          couponId: res.data.checkedCoupon ? res.data.checkedCoupon.userCouponId : 0
         });
       }
       wx.hideLoading();
@@ -91,6 +92,11 @@ Page({
   selectAddress() {
     wx.navigateTo({
       url: '/pages/shopping/address/address',
+    })
+  },
+  selectCoupon() {
+    wx.navigateTo({
+      url: '/pages/shopping/coupon/coupon',
     })
   },
   addAddress() {
@@ -107,6 +113,35 @@ Page({
     wx.showLoading({
       title: '加载中...',
     })
+    var isCart = wx.getStorageSync('isCart');
+    this.setData({
+      'isCart': isCart
+    });
+    var addressId = wx.getStorageSync('addressId');
+    if (addressId) {
+      this.setData({
+        'addressId': addressId
+      });
+    }
+
+    var couponId = wx.getStorageSync('userCouponId');
+    if (couponId) {
+      this.setData({
+        'couponId': couponId
+      });
+    }
+    var productId = wx.getStorageSync('justBudProductId');
+    if (productId) {
+      this.setData({
+        'productId': productId
+      });
+    }
+    var number = wx.getStorageSync('justBudnumber');
+    if (number) {
+      this.setData({
+        'number': number
+      });
+    }
     this.getCheckoutInfo();
 
   },
@@ -119,23 +154,56 @@ Page({
 
   },
   submitOrder: function () {
+    wx.getSetting({
+      withSubscriptions: true,
+      success(res) {
+        console.log(res.authSetting)
+        console.log(res.subscriptionsSetting)
+        // res.authSetting = {
+        //   "scope.userInfo": true,
+        //   "scope.userLocation": true
+        // }
+      }
+    })
     if (this.data.addressId <= 0) {
       util.showErrorToast('请选择收货地址');
       return false;
     }
+    let that = this;
+    console.log("aaa", that.data.couponId)
     util.request(api.OrderSubmit, {
-      addressId: this.data.addressId,
-      couponId: this.data.couponId,
-      checkoutGoodsList: this.data.checkedGoodsList,
-      isCart: this.data.isCart
+      addressId: that.data.addressId,
+      couponId: that.data.couponId,
+      checkoutGoodsList: that.data.checkedGoodsList,
+      isCart: that.data.isCart
 
     }, 'POST').then(res => {
       if (res.code === 0) {
         const orderId = res.data.id;
         pay.payOrder(parseInt(orderId)).then(res => {
-          wx.redirectTo({
-            url: '/pages/payResult/payResult?status=1&orderId=' + orderId
-          });
+          // 获取用户的当前设置，判断是否点击了“总是保持以上，不在询问”
+          wx.getSetting({
+            withSubscriptions: true, // 是否获取用户订阅消息的订阅状态，默认false不返回
+            success(res) {
+              console.log('res.authSetting', res.authSetting)
+              if (res.authSetting['scope.subscribeMessage']) {
+                console.log('用户点击了“总是保持以上，不再询问”')
+              } else {
+                console.log('用户没有点击“总是保持以上，不再询问”则每次都会调起订阅消息')
+                //因为没有选择总是保持，所以需要调起授权弹窗再次授权
+                wx.requestSubscribeMessage({
+                  tmplIds: ['W1vgYsb12MPxHNd_BqnOxr5YShAi0YrDk4dUZRbijps', 'cvzt9dvzVGgcqsSAl7hCP-PmXwZdGQpMpMCnuYhUYd0'],
+                  success(res) {
+                    wx.redirectTo({
+                      url: '/pages/payResult/payResult?status=1&orderId=' + orderId
+                    });
+                  }
+                })
+              }
+
+            }
+          })
+
         }).catch(res => {
           wx.redirectTo({
             url: '/pages/payResult/payResult?status=0&orderId=' + orderId

@@ -39,8 +39,9 @@ Page({
       }
     });
   },
-  onLoad: function (options) {  
-    this.getIndexData();
+  onLoad: function (options) {
+    //首先应该登录的
+    this.getIndexData()
     util.request(api.GoodsCount).then(res => {
       this.setData({
         goodsCount: res.data.goodsCount
@@ -51,6 +52,7 @@ Page({
     // 页面渲染完成
   },
   onShow: function () {
+
     // 页面显示
   },
   onHide: function () {

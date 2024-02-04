@@ -5,11 +5,11 @@ Page({
   data: {
     address: {
       id: 0,
-      province_id: 0,
+      provinceId: 0,
       city_id: 0,
-      district_id: 0,
+      districtId: 0,
       address: '',
-      full_region: '',
+      fullRegion: '',
       name: '',
       mobile: '',
       isDefault: 0

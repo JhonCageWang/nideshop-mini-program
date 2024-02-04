@@ -35,23 +35,8 @@ Page({
     // 页面关闭
   },
   selectCoupon: function (e) {
-    wx.reLaunch({
-      url: '/pages/index/index',
-    })
-  },
-  dealCouponCode: function () {
-    wx.showModal({
-      title: '暂未开通，敬请期待',
-      content: '暂未开通，敬请期待',
-      complete: (res) => {
-        if (res.cancel) {
-
-        }
-
-        if (res.confirm) {
-
-        }
-      }
-    })
+    console.info("数据", e.currentTarget.dataset.userCouponId)
+    wx.setStorageSync('userCouponId', e.currentTarget.dataset.userCouponId)
+    wx.navigateBack()
   }
 })

@@ -5,6 +5,7 @@ Page({
   data: {
     orderId: 0,
     address: {},
+    express: {},
     orderInfo: {},
     orderGoods: [],
     handleOption: {}
@@ -27,7 +28,8 @@ Page({
           orderInfo: res.data,
           orderGoods: res.data.goodsList,
           handleOption: res.data.handleOption,
-          address: res.data.address
+          address: res.data.address,
+          express: res.data.orderExpress
         });
         //that.payTimer();
       }
@@ -97,5 +99,10 @@ Page({
   },
   onUnload: function () {
     // 页面关闭
+  },
+  seeExpress: function () {
+    wx.navigateTo({
+      url: '/pages/ucenter/express/express?id=' + this.data.orderId,
+    })
   }
 })

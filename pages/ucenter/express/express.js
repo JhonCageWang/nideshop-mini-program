@@ -23,11 +23,13 @@ Page({
   },
   getExpressInfo() {
     let that = this;
-    util.request(api.OrderExpress, { orderId: that.data.orderId }).then(function (res) {
-      if (res.errno === 0) {
+    util.request(api.OrderExpress, {
+      orderId: that.data.orderId
+    }).then(function (res) {
+      if (res.code === 0) {
         that.setData({
           expressInfo: res.data,
-          expressTraces: res.data.traces
+          expressTraces: res.data.tracesList
         });
       }
     });
