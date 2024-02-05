@@ -16,10 +16,11 @@ Page({
     channel: []
   },
   onShareAppMessage: function () {
+    let userInfo = wx.getStorageSync('userInfo')
     return {
       title: '超级卖',
-      desc: '低价商品，有中间商赚差价 但不多',
-      path: '/pages/index/index'
+      desc: '低价商品，低价特卖',
+      path: '/pages/index/index?shareUserId=' + userInfo.id
     }
   },
 
@@ -39,14 +40,35 @@ Page({
       }
     });
   },
+  updateShareUserId: function (shareUserId) {
+    util.request(api.ShareUserUpdate, {
+      'shareUserId': shareUserId
+    }, 'POST').then(function (res) {
+      if (res.code === 0) {
+        wx.showToast({
+          title: '与分享者绑定成功',
+        })
+      }
+    });
+  },
   onLoad: function (options) {
+    console.info("aaaaa", options)
+    let _that = this
+    if (options.shareUserId) {
+      this.updateShareUserId(options.shareUserId)
+    }
     //首先应该登录的
-    this.getIndexData()
+
     util.request(api.GoodsCount).then(res => {
       this.setData({
         goodsCount: res.data.goodsCount
       });
+    }, (res) => {
+      if (res.data.code == 401) {
+        _that.onLoad({})
+      }
     });
+    this.getIndexData()
   },
   onReady: function () {
     // 页面渲染完成
@@ -62,7 +84,7 @@ Page({
     // 页面关闭
   },
   onPullDownRefresh() {
-    this.onLoad()
+    this.onLoad({})
     wx.stopPullDownRefresh()
   }
 })

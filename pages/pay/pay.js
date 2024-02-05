@@ -47,9 +47,28 @@ Page({
           'signType': payParam.signType,
           'paySign': payParam.paySign,
           'success': function (res) {
-            wx.redirectTo({
-              url: '/pages/payResult/payResult?status=true',
+            wx.getSetting({
+              withSubscriptions: true, // 是否获取用户订阅消息的订阅状态，默认false不返回
+              success(res) {
+                console.log('res.authSetting', res.authSetting)
+                if (res.authSetting['scope.subscribeMessage']) {
+                  console.log('用户点击了“总是保持以上，不再询问”')
+                } else {
+                  console.log('用户没有点击“总是保持以上，不再询问”则每次都会调起订阅消息')
+                  //因为没有选择总是保持，所以需要调起授权弹窗再次授权
+                  wx.requestSubscribeMessage({
+                    tmplIds: ['W1vgYsb12MPxHNd_BqnOxr5YShAi0YrDk4dUZRbijps', 'cvzt9dvzVGgcqsSAl7hCP-PmXwZdGQpMpMCnuYhUYd0'],
+                    success(res) {
+                      wx.redirectTo({
+                        url: '/pages/payResult/payResult?status=true',
+                      })
+                    }
+                  })
+                }
+
+              }
             })
+
           },
           'fail': function (res) {
             wx.redirectTo({

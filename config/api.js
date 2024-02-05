@@ -1,5 +1,5 @@
-const ApiRootUrl = 'https://www.itsforher.top/api/user/';
-// const ApiRootUrl = 'http://127.0.0.1:8080/api/user/';
+// const ApiRootUrl = 'https://www.itsforher.top/api/user/';
+const ApiRootUrl = 'http://127.0.0.1:8080/api/user/';
 // const ApiRootUrl = 'http://172.172.8.31:8080/api/user/';
 module.exports = {
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口
@@ -7,6 +7,8 @@ module.exports = {
   CatalogCurrent: ApiRootUrl + 'category/current', //分类目录当前分类数据接口
 
   AuthLoginByWeixin: ApiRootUrl + 'weixin/login', //微信登录
+
+  ShareUserUpdate: ApiRootUrl + 'share', //转发后 把装当前登录人与转发者绑定 只绑定一次
 
   GoodsCount: ApiRootUrl + 'goods/count', //统计商品总数
   GoodsList: ApiRootUrl + 'goods/list', //获得商品列表
