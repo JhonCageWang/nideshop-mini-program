@@ -32,6 +32,9 @@ Page({
           expressTraces: res.data.tracesList
         });
       }
+      wx.showToast({
+        title: '更新成功',
+      })
     });
   },
   updateExpress() {

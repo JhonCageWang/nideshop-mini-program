@@ -15,9 +15,10 @@
       <text class="desc">{{goods.goodsBrief}}</text>
       <text class="price">￥{{goods.priceRange}}</text>
       <view class="brand" wx:if="{{brand.name}}">
-        <navigator url="../brandDetail/brandDetail?id={{brand.brandId}}">
+        <!-- <navigator url="../brandDetail/brandDetail?id={{brand.brandId}}">
           <text>{{brand.name}}</text>
-        </navigator>
+        </navigator> -->
+        <text>{{brand.name}}</text>
       </view>
     </view>
   </view>
@@ -90,6 +91,8 @@
           {{item.answer}}
         </view>
       </view>
+    </view>
+    <view class="p">
     </view>
   </view>
 

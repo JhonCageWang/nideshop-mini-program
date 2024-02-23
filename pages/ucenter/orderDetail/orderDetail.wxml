@@ -7,13 +7,14 @@
             <view class="r">
                 <view class="btn" bindtap="cancelOrder" wx:if="{{ handleOption.cancel}}">取消订单</view>
                 <view class="btn active" bindtap="payOrder" wx:if="{{ handleOption.pay}}">去付款</view>
+                <view class="btn active" bindtap="cancelOrder" wx:if="{{ handleOption.delete}}">删除</view>
             </view>
         </view>
     </view>
     <view class="order-express" wx:if="{{express.id}}">
         <view class="h">
             <view class="label">物流单号：{{express.logisticCode}}</view>
-            <button type="primary" class="status" bind:tap="seeExpress">查看物流</button>
+            <button type="default" class="status" plain="true" bind:tap="seeExpress">查看物流</button>
         </view>
     </view>
     <view class="order-goods">

@@ -74,7 +74,7 @@
 </view>
 
 
-<view class="logout" bindtap="exitLogin">退出登录</view>
+<!-- <view class="logout" bindtap="exitLogin">退出登录</view> -->
 <view class='dialog-login' wx:if="{{showLoginDialog}}" bindtap='onCloseLoginDialog'>
   <view class='dialog-body' catchtap='onDialogBody'>
     <view class='title'>请选择登录方式</view>

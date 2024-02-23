@@ -341,12 +341,20 @@ Page({
       //打开规格选择窗口
       this.setData({
         show: !this.data.show,
-        isBuy: true
+        isBuy: true,
+        isCart: false
       });
       this.changeSpecInfo()
     }
   },
-
+  onShareAppMessage: function () {
+    let userInfo = wx.getStorageSync('userInfo')
+    return {
+      title: '超级卖',
+      desc: '低价商品，低价特卖',
+      path: '/pages/index/index?shareUserId=' + userInfo.id
+    }
+  },
   createOrderOrAddCart: function () {
     var that = this;
     //提示选择完整规格

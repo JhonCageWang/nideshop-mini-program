@@ -41,6 +41,7 @@
 }
 
 .goods-info .c {
+  overflow: hidden;
   display: block;
   width: 718.75rpx;
   height: 100%;
@@ -349,6 +350,11 @@
   text-align: center;
 }
 
+.common-problem .p {
+  height: 100rpx;
+  width: 750rpx;
+}
+
 .common-problem .h .line {
   display: inline-block;
   position: absolute;
@@ -564,8 +570,8 @@
   flex: 1;
   text-align: center;
   color: #333;
-  border-top: 1px solid #f4f4f4;
-  border-bottom: 1px solid #f4f4f4;
+  /* border-top: 1px solid #f4f4f4;
+  border-bottom: 1px solid #f4f4f4; */
 }
 
 .bottom-btn .r {
@@ -600,6 +606,7 @@
   /* position: fixed; */
   z-index: 9;
   bottom: 100rpx;
+  overflow: hidden;
 }
 
 .attr-pop .close {
@@ -640,6 +647,7 @@
 }
 
 .attr-pop .p {
+  overflow: hidden;
   font-size: 33rpx;
   color: #333;
   height: 33rpx;
@@ -648,6 +656,7 @@
 }
 
 .attr-pop .a {
+  overflow: hidden;
   font-size: 29rpx;
   color: #333;
   height: 40rpx;
@@ -661,6 +670,7 @@
 }
 
 .spec-con .name {
+  overflow: hidden;
   height: 32rpx;
   margin-bottom: 22rpx;
   font-size: 29rpx;
@@ -668,6 +678,7 @@
 }
 
 .spec-con .values {
+  overflow: hidden;
   height: auto;
   margin-bottom: 31.25rpx;
   font-size: 0;
