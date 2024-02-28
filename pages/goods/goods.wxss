@@ -666,7 +666,6 @@
 .spec-con {
   width: 100%;
   height: auto;
-  overflow: hidden;
 }
 
 .spec-con .name {

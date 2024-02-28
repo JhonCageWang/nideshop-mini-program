@@ -6,7 +6,34 @@ Page({
     page: 1,
     pageSize: 20,
     hasMoreData: true,
-    orderList: []
+    orderList: [],
+    navList: [{
+        'id': -1,
+        'name': '全部'
+      },
+      {
+        'id': 0,
+        'name': '待付款'
+      },
+      {
+        'id': 201,
+        'name': '已付款'
+      },
+      {
+        'id': 300,
+        'name': '已发货'
+      },
+      {
+        'id': 101,
+        'name': '已取消'
+      },
+      {
+        'id': 301,
+        'name': '已完成'
+      }
+
+    ],
+    id: -1
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -23,7 +50,8 @@ Page({
     let that = this;
     util.request(api.OrderList, {
       page: this.data.page,
-      size: this.data.pageSize
+      size: this.data.pageSize,
+      orderStatus: this.data.id
     }).then(function (res) {
       let oldOrderList = that.data.orderList
       if (res.code === 0) {
@@ -31,6 +59,13 @@ Page({
         wx.hideLoading()
         console.log(res.data);
         let newOrderList = res.data
+        debugger
+        if (that.data.page == 1 && newOrderList.length == 0) {
+          that.setData({
+            orderList: []
+          })
+          return
+        }
         if (newOrderList.length == 0) {
           that.setData({
             hasMoreData: false
@@ -78,6 +113,7 @@ Page({
   },
   onPullDownRefresh: function () {
     this.data.page = 1
+    this.data.id = -1
     this.getOrderList()
   },
   onReachBottom: function () {
@@ -89,4 +125,26 @@ Page({
       })
     }
   },
+  switchCate: function (event) {
+    if (this.data.id == event.currentTarget.dataset.id) {
+      return false;
+    }
+    var that = this;
+    var clientX = event.detail.x;
+    var currentTarget = event.currentTarget;
+    if (clientX < 60) {
+      that.setData({
+        scrollLeft: currentTarget.offsetLeft - 60
+      });
+    } else if (clientX > 330) {
+      that.setData({
+        scrollLeft: currentTarget.offsetLeft
+      });
+    }
+    this.setData({
+      id: event.currentTarget.dataset.id
+    });
+    this.data.page = 1
+    this.getOrderList();
+  }
 })

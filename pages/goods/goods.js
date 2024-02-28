@@ -190,7 +190,8 @@ Page({
     let checkedList = this.getCheckedProductItem(key)
     if (checkedList.length > 0) {
       this.setData({
-        checkedProductPrice: checkedList[0].retailPrice
+        checkedProductPrice: checkedList[0].retailPrice,
+        productPic: checkedList[0].picUrl,
       })
     }
     //设置选择的信息

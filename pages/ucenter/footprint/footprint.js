@@ -50,7 +50,7 @@ Page({
       });
     } else {
       wx.navigateTo({
-        url: '/pages/goods/goods?id=' + footprint.goods_id,
+        url: '/pages/goods/goods?id=' + footprint.goodsId,
       });
     }
 

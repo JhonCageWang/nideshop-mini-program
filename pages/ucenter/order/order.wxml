@@ -1,5 +1,15 @@
 <view class="container">
-    <view class="orders">
+    <view class="cate-nav">
+        <scroll-view scroll-x="true" class="cate-nav-body" style="width: 750rpx;" scroll-left="{{scrollLeft}}">
+            <view wx:for="{{navList}}" class="item {{ id == item.id ? 'active' : ''}}" data-id="{{item.id}}" data-index="{{index}}" bindtap="switchCate">
+                <view class="name">{{item.name}}</view>
+            </view>
+        </scroll-view>
+    </view>
+    <view wx:if="{{orderList.length == 0}}" class="no-data">
+        暂无数据
+    </view>
+    <view class="orders" wx:if="{{orderList.length > 0}}">
         <navigator url="../orderDetail/orderDetail?id={{item.id}}" class="order" wx:for="{{orderList}}" wx:key="{{item.id}}">
             <view class="h">
                 <view class="l">订单编号：{{item.orderSn}}</view>
