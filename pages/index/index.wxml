@@ -120,4 +120,5 @@
       </block>
     </view>
   </view>
+  <image src='/static/images/bbkk.png' class='goTop' hidden='{{!floorstatus}}' bindtap="goTop"></image>
 </view>

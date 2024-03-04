@@ -8,7 +8,8 @@ Page({
     express: {},
     orderInfo: {},
     orderGoods: [],
-    handleOption: {}
+    handleOption: {},
+    payFlag:true
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -48,12 +49,22 @@ Page({
     }, 1000);
   },
   payOrder() {
+    if (!this.data.payFlag) {
+      util.showErrorToast('请勿重复点击')
+      return
+    }
+    this.setData({
+      payFlag:false
+    })
     let that = this;
     util.request(api.PayPrepayId, {
       orderId: that.data.orderId || 15
     }).then(function (res) {
       if (res.code === 0) {
         const payParam = res.data;
+        that.setData({
+          payFlag:true
+        })
         wx.requestPayment({
           'timeStamp': payParam.timeStamp,
           'nonceStr': payParam.nonceStr,

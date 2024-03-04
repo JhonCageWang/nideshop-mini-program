@@ -48,10 +48,11 @@ Page({
       title: '正在加载'
     })
     let that = this;
+    debugger
     util.request(api.OrderList, {
-      page: this.data.page,
-      size: this.data.pageSize,
-      orderStatus: this.data.id
+      page: that.data.page,
+      size: that.data.pageSize,
+      orderStatus: that.data.id
     }).then(function (res) {
       let oldOrderList = that.data.orderList
       if (res.code === 0) {
@@ -112,8 +113,9 @@ Page({
     // 页面关闭
   },
   onPullDownRefresh: function () {
-    this.data.page = 1
-    this.data.id = -1
+    this.setData({
+      page:1
+    })
     this.getOrderList()
   },
   onReachBottom: function () {
@@ -144,7 +146,9 @@ Page({
     this.setData({
       id: event.currentTarget.dataset.id
     });
-    this.data.page = 1
+    this.setData({
+      page:1
+    })
     this.getOrderList();
   }
 })

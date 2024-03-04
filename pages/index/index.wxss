@@ -7,6 +7,15 @@
   display: flex;
   align-items: center;
 }
+/* 返回顶部 */
+.goTop{
+  height: 90rpx;
+  width: 90rpx;
+  position: fixed;
+  bottom: 90rpx;
+  right: 40rpx;
+  border-radius: 50%;
+}
 
 .search .input {
   width: 690rpx;

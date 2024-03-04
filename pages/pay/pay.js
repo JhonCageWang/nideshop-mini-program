@@ -5,10 +5,12 @@ var api = require('../../config/api.js');
 Page({
   data: {
     orderId: 0,
-    actualPrice: 0.00
+    actualPrice: 0.00,
+    payFlag:true
   },
   onLoad: function (options) {
     options = wx.getStorageSync('orderInfo')
+    debugger
     console.log('ddd', options)
     // 页面初始化 options为页面跳转所带来的参数
     this.setData({
@@ -40,6 +42,9 @@ Page({
     }).then(function (res) {
       if (res.code === 0) {
         let payParam = res.data;
+        that.setData({
+          payFlag:true
+        })
         wx.requestPayment({
           'timeStamp': payParam.timeStamp,
           'nonceStr': payParam.nonceStr,
@@ -90,6 +95,13 @@ Page({
     });
   },
   startPay() {
+    if (!this.data.payFlag) {
+      util.showErrorToast('请勿重复点击')
+      return
+    }
+    this.setData({
+      payFlag:false
+    })
     this.requestPayParam();
   }
 })

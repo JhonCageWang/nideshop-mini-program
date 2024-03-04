@@ -6,12 +6,14 @@ var app = getApp();
 Page({
   data: {
     status: false,
-    orderId: 0
+    orderId: 0,
+    payFlag:true
   },
   onLoad: function (options) {
+    options = wx.getStorageSync('orderInfo')
     // 页面初始化 options为页面跳转所带来的参数
     this.setData({
-      orderId: options.orderId || 24,
+      orderId: options.id,
       status: options.status
     })
   },
@@ -31,11 +33,23 @@ Page({
 
   },
   payOrder() {
+    if (!this.data.payFlag) {
+      util.showErrorToast('请勿重复点击')
+      return
+    } 
+    this.setData({
+      payFlag:false
+    })
+    let _that = this
     pay.payOrder(parseInt(this.data.orderId)).then(res => {
-      this.setData({
-        status: true
+      _that.setData({
+        status: true,
+        payFlag:true
       });
     }).catch(res => {
+      _that.setData({
+        payFlag:true
+      });
       util.showErrorToast('支付失败');
     });
   }
