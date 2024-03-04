@@ -60,7 +60,7 @@
       </view>
     </view>
   </view>
-  <view class="goods-attr">
+  <view class="goods-attr" wx:if="{{attribute != null && attribute.length>0}}">
     <view class="t">商品参数</view>
     <view class="l">
       <view class="item" wx:for="{{attribute}}" wx:key="{{item.name}}">

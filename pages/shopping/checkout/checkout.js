@@ -44,7 +44,7 @@ Page({
         });
       }
       var productId = wx.getStorageSync('justBudProductId');
-      if (productId) {
+      if (!isCart && productId) {
         this.setData({
           'productId': productId
         });
@@ -130,8 +130,9 @@ Page({
         'couponId': couponId
       });
     }
+    debugger
     var productId = wx.getStorageSync('justBudProductId');
-    if (productId) {
+    if (!isCart && productId) {
       this.setData({
         'productId': productId
       });
