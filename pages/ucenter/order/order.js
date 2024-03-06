@@ -48,7 +48,6 @@ Page({
       title: '正在加载'
     })
     let that = this;
-    debugger
     util.request(api.OrderList, {
       page: that.data.page,
       size: that.data.pageSize,
@@ -60,7 +59,6 @@ Page({
         wx.hideLoading()
         console.log(res.data);
         let newOrderList = res.data
-        debugger
         if (that.data.page == 1 && newOrderList.length == 0) {
           that.setData({
             orderList: []

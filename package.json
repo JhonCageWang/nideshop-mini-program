@@ -1,0 +1,26 @@
+{
+  "name": "nideshop-mini-program",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JhonCageWang/nideshop-mini-program.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JhonCageWang/nideshop-mini-program/issues"
+  },
+  "homepage": "https://github.com/JhonCageWang/nideshop-mini-program#readme",
+  "dependencies": {
+    "regenerator": "^0.14.12"
+  }
+}

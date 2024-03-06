@@ -130,7 +130,6 @@ Page({
         'couponId': couponId
       });
     }
-    debugger
     var productId = wx.getStorageSync('justBudProductId');
     if (!isCart && productId) {
       this.setData({
@@ -171,7 +170,6 @@ Page({
       return false;
     }
     let that = this;
-    console.log("aaa", that.data.couponId)
     util.request(api.OrderSubmit, {
       addressId: that.data.addressId,
       couponId: that.data.couponId,

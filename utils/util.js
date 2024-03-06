@@ -1,4 +1,5 @@
 var api = require('../config/api.js')
+var regeneratorRuntime = require('./runtime')
 const app = getApp();
 
 function formatTime(date) {
@@ -36,7 +37,7 @@ function request(url, data = {}, method = "GET") {
 
         if (res.statusCode == 200) {
 
-          if (res.data.code == 401) {
+          if (res.data.code == 401 || res.data.code == 2014) {
             //需要登录后才可以操作
 
             let code = null;
@@ -50,7 +51,6 @@ function request(url, data = {}, method = "GET") {
                 userInfo: userInfo
               }, 'POST').then(res => {
                 if (res.code === 0) {
-                  app.globalData.userInfo = res.data.userInfo
                   //存储用户信息
                   wx.setStorageSync('userInfo', res.data.userInfo);
                   wx.setStorageSync('token', res.data.token);
@@ -146,6 +146,11 @@ function getUserInfo() {
   });
 }
 
+async function asyncLoginFunc() {
+  let code = await login()
+  console.log('fffffffffff')
+}
+
 function redirect(url) {
 
   //判断页面是否需要登录
@@ -178,4 +183,5 @@ module.exports = {
   checkSession,
   login,
   getUserInfo,
+  asyncLoginFunc
 }

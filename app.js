@@ -1,3 +1,4 @@
+var util = require('./utils/util');
 App({
   onLaunch: function () {
     try {
@@ -8,6 +9,9 @@ App({
     }
   },
 
+  onShow: function () {
+
+  },
   globalData: {
     userInfo: {
       nickname: '点击登录',

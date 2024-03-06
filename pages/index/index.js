@@ -87,8 +87,8 @@ Page({
     this.onLoad({})
     wx.stopPullDownRefresh()
   },
-   // 获取滚动条当前位置
-   onPageScroll: function (e) {
+  // 获取滚动条当前位置
+  onPageScroll: function (e) {
     if (e.scrollTop > 100) {
       this.setData({
         floorstatus: true
@@ -101,7 +101,7 @@ Page({
   },
 
   //回到顶部
-  goTop: function (e) {  // 一键回到顶部
+  goTop: function (e) { // 一键回到顶部
     if (wx.pageScrollTo) {
       wx.pageScrollTo({
         scrollTop: 0

@@ -6,11 +6,10 @@ Page({
   data: {
     orderId: 0,
     actualPrice: 0.00,
-    payFlag:true
+    payFlag: true
   },
   onLoad: function (options) {
     options = wx.getStorageSync('orderInfo')
-    debugger
     console.log('ddd', options)
     // 页面初始化 options为页面跳转所带来的参数
     this.setData({
@@ -43,7 +42,7 @@ Page({
       if (res.code === 0) {
         let payParam = res.data;
         that.setData({
-          payFlag:true
+          payFlag: true
         })
         wx.requestPayment({
           'timeStamp': payParam.timeStamp,
@@ -100,7 +99,7 @@ Page({
       return
     }
     this.setData({
-      payFlag:false
+      payFlag: false
     })
     this.requestPayParam();
   }

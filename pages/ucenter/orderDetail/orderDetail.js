@@ -9,7 +9,7 @@ Page({
     orderInfo: {},
     orderGoods: [],
     handleOption: {},
-    payFlag:true
+    payFlag: true
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -54,7 +54,7 @@ Page({
       return
     }
     this.setData({
-      payFlag:false
+      payFlag: false
     })
     let that = this;
     util.request(api.PayPrepayId, {
@@ -63,7 +63,7 @@ Page({
       if (res.code === 0) {
         const payParam = res.data;
         that.setData({
-          payFlag:true
+          payFlag: true
         })
         wx.requestPayment({
           'timeStamp': payParam.timeStamp,
@@ -85,6 +85,23 @@ Page({
   cancelOrder: function () {
     let that = this;
     util.request(api.OrderCancel, {
+      orderId: that.data.orderId
+    }, "POST").then(function (res) {
+      if (res.code === 0) {
+        console.log(res.data);
+        wx.showToast({
+          title: '取消成功',
+        })
+        setTimeout(function () {
+          wx.navigateBack()
+        }, 2000)
+      }
+    });
+
+  },
+  deleteOrder: function () {
+    let that = this;
+    util.request(api.DeleteOrder, {
       orderId: that.data.orderId
     }, "POST").then(function (res) {
       if (res.code === 0) {
