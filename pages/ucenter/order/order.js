@@ -38,7 +38,7 @@ Page({
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
 
-    this.getOrderList();
+    // this.getOrderList();
   },
   getOrderList() {
     //在当前页面显示导航条加载动画
@@ -103,6 +103,7 @@ Page({
   },
   onShow: function () {
     // 页面显示
+    this.getOrderList();
   },
   onHide: function () {
     // 页面隐藏
@@ -112,7 +113,7 @@ Page({
   },
   onPullDownRefresh: function () {
     this.setData({
-      page:1
+      page: 1
     })
     this.getOrderList()
   },
@@ -145,7 +146,7 @@ Page({
       id: event.currentTarget.dataset.id
     });
     this.setData({
-      page:1
+      page: 1
     })
     this.getOrderList();
   }

@@ -5,7 +5,7 @@ Page({
   data: {
     orderId: 0,
     address: {},
-    express: {},
+    express: [],
     orderInfo: {},
     orderGoods: [],
     handleOption: {},
@@ -107,11 +107,13 @@ Page({
       if (res.code === 0) {
         console.log(res.data);
         wx.showToast({
-          title: '取消成功',
+          title: '删除成功',
         })
         setTimeout(function () {
           wx.navigateBack()
         }, 2000)
+      } else {
+        util.showErrorToast('删除失败')
       }
     });
 
@@ -128,9 +130,10 @@ Page({
   onUnload: function () {
     // 页面关闭
   },
-  seeExpress: function () {
+  seeExpress: function (e) {
+    console.log(e)
     wx.navigateTo({
-      url: '/pages/ucenter/express/express?id=' + this.data.orderId,
+      url: '/pages/ucenter/express/express?id=' + e.target.dataset.id,
     })
   }
 })

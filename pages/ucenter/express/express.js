@@ -9,6 +9,7 @@ Page({
     expressTraces: []
   },
   onLoad: function (options) {
+    debugger
     this.setData({
       orderId: options.id
     });

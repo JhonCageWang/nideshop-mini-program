@@ -74,11 +74,7 @@ Page({
             })
 
           },
-          'fail': function (res) {
-            wx.redirectTo({
-              url: '/pages/payResult/payResult?status=false',
-            })
-          }
+          'fail': function (res) {}
         })
       } else {
         wx.showToast({

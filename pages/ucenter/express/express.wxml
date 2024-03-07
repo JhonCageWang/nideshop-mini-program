@@ -9,7 +9,7 @@
       <view class='update-btn' bindtap="updateExpress">更新物流</view>
     </view>
   </view>
-  <view class='express-body'>
+  <view class='express-body' wx:if="{{expressTraces && expressTraces.length>0}}">
     <view class='current-icon'></view>
     <view class="express-item item-{{index}}" wx:for="{{expressTraces}}" wx:key="{{key}}">
       <view class='left'></view>
@@ -18,5 +18,8 @@
         <view class="time">{{item.datetime}}</view>
       </view>
     </view>
+  </view>
+  <view class='express-body' wx:if="{{!expressTraces || expressTraces.length ==0}}">
+    <span>待揽件，揽件后会自动更新</span>
   </view>
 </view>

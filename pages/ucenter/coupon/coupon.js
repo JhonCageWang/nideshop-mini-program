@@ -35,7 +35,7 @@ Page({
     // 页面关闭
   },
   selectCoupon: function (e) {
-    wx.reLaunch({
+    wx.switchTab({
       url: '/pages/index/index',
     })
   },

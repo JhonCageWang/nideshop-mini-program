@@ -193,6 +193,10 @@ Page({
                 wx.requestSubscribeMessage({
                   tmplIds: ['W1vgYsb12MPxHNd_BqnOxr5YShAi0YrDk4dUZRbijps', 'cvzt9dvzVGgcqsSAl7hCP-PmXwZdGQpMpMCnuYhUYd0'],
                   success(res) {
+                    wx.setStorageSync('orderInfo', {
+                      'id': orderId,
+                      'status': 1
+                    })
                     wx.redirectTo({
                       url: '/pages/payResult/payResult?status=1&orderId=' + orderId
                     });
@@ -204,9 +208,14 @@ Page({
           })
 
         }).catch(res => {
+          wx.setStorageSync('orderInfo', {
+            'id': orderId,
+            'status': 0
+          })
           wx.redirectTo({
             url: '/pages/payResult/payResult?status=0&orderId=' + orderId
           });
+
         });
       } else {
         util.showErrorToast('下单失败');
