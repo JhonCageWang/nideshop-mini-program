@@ -390,6 +390,7 @@ Page({
       });
       return false;
     }
+    debugger
     //购物车
     if (this.data.isCart) {
       //添加到购物车
@@ -410,7 +411,7 @@ Page({
           } else {
             wx.showToast({
               image: '/static/images/icon_error.png',
-              title: _res.errmsg,
+              title: _res.msg,
               mask: true
             });
           }

@@ -14,7 +14,13 @@ Page({
     },
     isEditCart: false,
     checkedAllStatus: true,
-    editCartList: []
+    editCartList: [],
+    currentTouche: {
+      x: 0,
+      y: 0
+    },
+    offset: 20,
+    infoList: [2, 3, 4]
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -121,14 +127,16 @@ Page({
     let that = this;
 
     if (!this.data.isEditCart) {
+
       var productIds = this.data.cartGoods.map(function (v) {
-        return v.product_id;
+        return v.productId;
       });
+      debugger
       util.request(api.CartChecked, {
         productIds: productIds.join(','),
-        isChecked: that.isCheckedAll() ? 0 : 1
+        checked: that.isCheckedAll() ? 0 : 1
       }, 'POST').then(function (res) {
-        if (res.errno === 0) {
+        if (res.code === 0) {
           console.log(res.data);
           that.setData({
             cartGoods: res.data.cartList,
@@ -293,5 +301,87 @@ Page({
   onPullDownRefresh() {
     this.getCartList();
     wx.stopPullDownRefresh()
-  }
+  },
+  /** 点击删除 */
+  handleDelete(e) {
+    let {
+      id
+    } = e.currentTarget.dataset;
+    this.itemDel(id)
+  },
+  /** 删除逻辑 */
+  itemDel(id) {
+    this.data.cardList.forEach((item, index) => {
+      if (item.id == id) {
+        this.data.cardList.splice(index, 1)
+      }
+      this.setData({
+        cardList: this.data.cardList
+      })
+      wx.showToast({
+        title: '删除成功',
+        icon: 'success'
+      })
+    })
+  },
+
+  /** 处理touchstart事件 */
+  handleTouchStart(e) {
+    this.startX = e.touches[0].pageX
+  },
+  /** 处理touchend事件 */
+  handleTouchEnd(e) {
+    if (e.changedTouches[0].pageX < this.startX && e.changedTouches[0].pageX - this.startX <= -30) {
+      this.showDeleteButton(e)
+    } else if (e.changedTouches[0].pageX > this.startX && e.changedTouches[0].pageX - this.startX < 30) {
+      this.showDeleteButton(e)
+    } else {
+      this.hideDeleteButton(e)
+    }
+  },
+  /** 显示删除按钮 */
+  showDeleteButton: function (e) {
+    let index = e.currentTarget.dataset.index;
+    this.setXmove(index, -65);
+    // 其它复位
+    let {
+      cardList
+    } = this.data;
+    if (cardList.length > 0) {
+      cardList.forEach((item, itemIndex) => {
+        if (index != itemIndex && cardList[itemIndex].xmove != 0) {
+          this.setData({
+            ['cardList[' + itemIndex + '].xmove']: 0
+          });
+        }
+      });
+    }
+  },
+  /** 隐藏删除按钮 */
+  hideDeleteButton: function (e) {
+    let index = e.currentTarget.dataset.index;
+    this.setXmove(index, 0);
+  },
+  /** 设置movable-view位移 */
+  setXmove: function (index, xmove) {
+    let {
+      cardList
+    } = this.data;
+    cardList[index].xmove = xmove;
+    this.setData({
+      cardList: cardList
+    })
+  },
+  /** 处理movable-view移动事件 */
+  handleMovableChange: function (e) {
+    if (e.detail.source === 'friction') {
+      if (e.detail.x < -30) {
+        this.showDeleteButton(e)
+      } else {
+        this.hideDeleteButton(e)
+      }
+    } else if (e.detail.source === 'out-of-bounds' && e.detail.x === 0) {
+      this.hideDeleteButton(e)
+    }
+  },
 })

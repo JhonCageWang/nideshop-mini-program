@@ -5,7 +5,7 @@ page {
 
 .address-box {
     width: 100%;
-    height: 166.55rpx;
+    height: auto;
     background: url('http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/address-bg-bd30f2bfeb.png') 0 0 repeat-x;
     background-size: 62.5rpx 10.5rpx;
     margin-bottom: 20rpx;
@@ -14,7 +14,7 @@ page {
 
 .address-item {
     display: flex;
-    height: 155.55rpx;
+    height: auto;
     background: #fff;
     padding: 41.6rpx 0 41.6rpx 31.25rpx;
 }
@@ -57,7 +57,7 @@ page {
 
 .address-box .m {
     flex: 1;
-    height: 72.25rpx;
+    height: auto;
     color: #999;
 }
 
@@ -72,7 +72,6 @@ page {
 
 .address-box .address {
     display: block;
-    height: 60rpx;
     line-height: 37.5rpx;
     font-size: 25rpx;
     color: #666;

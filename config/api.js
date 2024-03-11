@@ -1,5 +1,5 @@
-const ApiRootUrl = 'https://www.itsforher.top/api/user/';
-// const ApiRootUrl = 'http://127.0.0.1:8080/api/user/';
+// const ApiRootUrl = 'https://www.itsforher.top/api/user/';
+const ApiRootUrl = 'http://127.0.0.1:8080/api/user/';
 // const ApiRootUrl = 'http://172.172.8.31:8080/api/user/';
 module.exports = {
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口
