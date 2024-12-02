@@ -57,7 +57,6 @@ Page({
       if (res.code === 0) {
         wx.hideNavigationBarLoading() //在当前页面隐藏导航条加载动画
         wx.hideLoading()
-        console.log(res.data);
         let newOrderList = res.data
         if (that.data.page == 1 && newOrderList.length == 0) {
           that.setData({
@@ -101,12 +100,69 @@ Page({
   onReady: function () {
     // 页面渲染完成
   },
-  onShow: function () {
-    // 页面显示
+  onShow: function (options) {
+    debugger
+    if (options && wx.openBusinessView && thismerchant_id && merchant_trade_no) {
+    var merchant_id =  options.merchant_id
+    var merchant_trade_no = options.merchant_trade_no
+    console.log('logOptionOrder'+options);
+      wx.openBusinessView({
+        businessType: 'weappOrderConfirm',
+        extraData: {
+          merchant_id: merchant_id,//用户交易商户号
+          merchant_trade_no: merchant_trade_no,//商户订单号
+    // 　　　transaction_id: "4200001918202309184260377001" //用户交易单号
+        },
+        success:e=>{
+          console.log("e1",e)
+          this.orderSn = sn
+          if(e.extraData.status === 'success'){
+            // 用户确认收货成功，再执行自己的代码
+            wx.showToast({
+              title: "确认收货成功!",
+              icon: "none",
+            });
+            this.confirmRog()
+          }else if(e.extraData.status === 'fail'){
+            // 用户确认收货失败
+            wx.showToast({
+              title: "确认收货失败!",
+              icon: "none",
+            });
+          }else if(e.extraData.status === 'cancel'){
+            // 用户取消
+            wx.showToast({
+              title: "取消确认收货!",
+              icon: "none",
+            });
+          }
+        },
+        fail:e=>{
+          console.log("e2",e)
+          wx.showToast({
+            title: "确认收货失败",
+            icon: "none",
+          });
+        },
+        complete:e=>{
+          console.log("e3",e)
+          console.log("无论是否成功都会执行")
+        }
+      });
+    } else {
+      //引导用户升级微信版本
+      wx.showToast({
+        title: "请升级微信版本",
+        icon: "none",
+      });
+    }
     this.getOrderList();
   },
   onHide: function () {
     // 页面隐藏
+  },
+  onUnload: function () {
+    // 页面关闭
   },
   onUnload: function () {
     // 页面关闭

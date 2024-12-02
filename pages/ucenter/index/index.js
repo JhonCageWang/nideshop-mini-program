@@ -5,7 +5,10 @@ const app = getApp();
 
 Page({
   data: {
-    userInfo: {},
+    userInfo: {
+      "nickname":"微信用户",
+      "avatar":'http://yanxuan.nosdn.127.net/8945ae63d940cc42406c3f67019c5cb6.png'
+    },
     showLoginDialog: false
   },
   onLoad: function (options) {},
@@ -13,10 +16,10 @@ Page({
 
   },
   onShow: function () {
-    let userInfo = wx.getStorageSync('userInfo')
-    this.setData({
-      userInfo: userInfo,
-    });
+    // let userInfo = wx.getStorageSync('userInfo')
+    // this.setData({
+    //   userInfo: userInfo,
+    // });
   },
   onHide: function () {
     // 页面隐藏
@@ -27,12 +30,12 @@ Page({
   },
 
   onUserInfoClick: function () {
-    this.showLoginDialog();
-    if (wx.getStorageSync('token')) {
+    // this.showLoginDialog();
+    // if (wx.getStorageSync('token')) {
 
-    } else {
-      this.showLoginDialog();
-    }
+    // } else {
+    //   this.showLoginDialog();
+    // }
   },
 
   showLoginDialog() {

@@ -7,7 +7,8 @@ var app = getApp();
 
 Page({
   data: {
-    couponList: []
+    couponList: [],
+    yhCode:''
   },
   onLoad: function (options) {
     let that = this;
@@ -37,6 +38,12 @@ Page({
   selectCoupon: function (e) {
     wx.switchTab({
       url: '/pages/index/index',
+    })
+  },
+  clearInput: function (e) {
+    debugger
+    this.setData({
+      yhCode: ''
     })
   },
   dealCouponCode: function () {

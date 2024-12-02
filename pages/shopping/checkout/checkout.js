@@ -191,11 +191,11 @@ Page({
                 console.log('用户没有点击“总是保持以上，不再询问”则每次都会调起订阅消息')
                 //因为没有选择总是保持，所以需要调起授权弹窗再次授权
                 wx.requestSubscribeMessage({
-                  tmplIds: ['W1vgYsb12MPxHNd_BqnOxr5YShAi0YrDk4dUZRbijps', 'cvzt9dvzVGgcqsSAl7hCP-PmXwZdGQpMpMCnuYhUYd0'],
+                  tmplIds: ['T7YuHvuNl8W8PctDtyODgW2RkyAM2-ZKVyN_cOgf9ng', 'y3BlFEBKGY36TXFVw7ziDEW-J860L8Nag9KaSk57Y6s'],
                   success(res) {
                     wx.setStorageSync('orderInfo', {
                       'id': orderId,
-                      'status': 1
+                      'status': true
                     })
                     wx.redirectTo({
                       url: '/pages/payResult/payResult?status=1&orderId=' + orderId
@@ -210,7 +210,7 @@ Page({
         }).catch(res => {
           wx.setStorageSync('orderInfo', {
             'id': orderId,
-            'status': 0
+            'status': false
           })
           wx.redirectTo({
             url: '/pages/payResult/payResult?status=0&orderId=' + orderId
