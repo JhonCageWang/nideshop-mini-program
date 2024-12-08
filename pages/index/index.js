@@ -52,6 +52,7 @@ Page({
     });
   },
   onLoad: function (options) {
+    debugger
     const updateManager = wx.getUpdateManager()
 
 updateManager.onCheckForUpdate(function (res) {

@@ -39,6 +39,132 @@ Page({
     regionList: [],
     selectRegionDone: false
   },
+  choseLocation() {
+    var _that = this;
+    const category = '';
+    const key = 'MWDBZ-YKU67-LFDXN-P2ZE6-LHOYK-OJFRO'; //使用在腾讯位置服务申请的key
+    const referer = '王胖胖的小卖部'; //调用插件的app的名称
+    const location = JSON.stringify({
+      latitude: 39.89631551,
+      longitude: 116.323459711
+    });
+    const hotCitys = ''; // 用户自定义的的热门城市
+    // wx.navigateTo({
+    //   url: 'plugin://chooseLocation/index?key=' + key + '&referer=' + referer + '&location=' + location + '&category=' + category
+    // });
+    // wx.navigateTo({
+    //   url: `plugin://citySelector/index?key=${key}&referer=${referer}&hotCitys=${hotCitys}`,
+    // })
+    wx.choosePoi({
+      "success": function name(params) {
+        console.log("add" + JSON.stringify(params));
+        var sn = params.address+params.name;
+        if (params.type == 1) {
+          wx.showToast({
+            title: '请选择详细地址',
+            icon: "none"
+          })
+          return;
+        }
+        var url = `https://apis.map.qq.com/ws/geocoder/v1/?address=${encodeURIComponent(params.address)}&key=${key}`
+        wx.request({
+          url: url,
+          method: 'GET',
+          success: function (res) {
+            if (res.data.status === 0) {
+              const result = res.data.result;
+              const title = result.title;
+              const province = result.address_components.province; // 省
+              const city = result.address_components.city; // 市
+              const district = result.address_components.district; // 区
+              const adcode = result.address_components.adcode; // 地区编码
+              debugger
+              var idx = sn.indexOf(district);
+              const startIndex = idx + district.length;
+              const rst = sn.substring(startIndex); 
+              if (province && city && district) {
+                util.request(api.RegionGetCode, {
+                  'province': province,
+                  "city": city,
+                  "district": district
+                }).then(function (res) {
+                  let address = _that.data.address;
+                  address.provinceId = res.data.provinceCode;
+                  address.cityId = res.data.cityCode;
+                  address.districtId = res.data.districtCode;
+                  address.address = rst;
+                  address.fullRegion = province+city+district
+                  _that.setData({
+                    address: address
+                  });
+                })
+              } else {
+                wx.showToast({
+                  title: '地址不够完整，请手动输入',
+                  icon: "none"
+                })
+                return;
+              }
+            } else {
+              console.error("未找到相关地址信息");
+              wx.showToast({
+                title: '地址解析失败，请手动输入',
+                icon: "none"
+              })
+              return;
+            }
+          },
+          fail: function () {
+            console.error("请求失败");
+          }
+        });
+      }
+    })
+    // wx.getLocation({
+    //   type: 'wgs84',
+    //   success(res) {
+    //     debugger
+    //     const latitude = res.latitude
+    //     const longitude = res.longitude
+    //     const speed = res.speed
+    //     const accuracy = res.accuracy
+    //     const key = 'MWDBZ-YKU67-LFDXN-P2ZE6-LHOYK-OJFRO'; //使用在腾讯位置服务申请的key
+    //     const referer = '王胖胖的小卖部'; //调用插件的app的名称
+    //     const location = JSON.stringify({
+    //       latitude: latitude,
+    //       longitude: longitude
+    //     });
+    //     const category = '生活服务,娱乐休闲';
+    //     wx.navigateTo({
+    //       url: 'plugin://chooseLocation/index?key=' + key + '&referer=' + referer + '&location=' + location + '&category=' + category
+    //     });
+    //   }
+    // })
+
+  },
+  getrealtimephonenumber (e) {
+    var _this = this;
+    debugger
+    console.log(e.detail.code)  // 动态令牌
+    console.log(e.detail.errMsg) // 回调信息（成功失败都会返回）
+    console.log(e.detail.errno) 
+    if(e.detail.errMsg == 'getPhoneNumber:ok') {
+      util.request(api.Mobile,{"code":e.detail.code})
+      .then(function(res) {
+        let address = _this.data.address;
+        address.mobile = res.data;
+        _this.setData({
+          address:address
+        })
+      }) // 错误码（失败时返回）
+    } else {
+      wx.showToast({
+        image: '/static/images/icon_error.png',
+        title: '获取手机号失败',
+      })
+    }
+    
+},
   bindinputMobile(event) {
     let address = this.data.address;
     address.mobile = event.detail.value;

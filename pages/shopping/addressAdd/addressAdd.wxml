@@ -5,9 +5,15 @@
     </view>
     <view class="form-item">
       <input class="input" bindinput="bindinputMobile" value="{{address.mobile}}" placeholder="手机号码" />
+      <button open-type="getPhoneNumber" class="number" bindgetphonenumber="getrealtimephonenumber">
+      点击获取手机号
+    </button>
     </view>
     <view class="form-item">
       <input class="input" value="{{address.fullRegion}}" disabled="true" bindtap="chooseRegion" placeholder="省份、城市、区县" />
+      <button  class="number" bind:tap="choseLocation">
+        地图选择
+      </button>
     </view>
     <view class="form-item">
       <input class="input" bindinput="bindinputAddress" maxlength="50" value="{{address.address}}" placeholder="详细地址, 如街道、楼盘号等" />
@@ -16,7 +22,7 @@
       <text bindtap="bindIsDefault" class="default-input {{address.isDefault == 1 ? 'selected' : ''}}">设为默认地址</text>
     </view>
   </view>
-
+  
   <view class="btns">
     <button class="cannel" bindtap="cancelAddress">取消</button>
     <button class="save" bindtap="saveAddress">保存</button>

@@ -1,6 +1,6 @@
 const ApiRootUrl = 'https://www.itsforher.top/api/user/';
 // const ApiRootUrl = 'http://127.0.0.1:8080/api/user/';
-// const ApiRootUrl = 'http://172.172.8.31:8080/api/user/';
+// const ApiRootUrl = 'http://192.168.137.42:8080/api/user/';
 module.exports = {
   IndexUrl: ApiRootUrl + 'index/index', //首页数据接口
   CatalogList: ApiRootUrl + 'category/index', //分类目录全部分类数据接口
@@ -55,15 +55,17 @@ module.exports = {
   AddressDelete: ApiRootUrl + 'address/delete', //保存收货地址
 
   RegionList: ApiRootUrl + 'region/list', //获取区域列表
+  RegionGetCode: ApiRootUrl + 'region/getCode', //获取区域列表
 
   OrderList: ApiRootUrl + 'order/list', //订单列表
   OrderDetail: ApiRootUrl + 'order/detail', //订单详情
   OrderCancel: ApiRootUrl + 'order/cancel', //取消订单
   DeleteOrder: ApiRootUrl + 'order/delete', //取消订单
+  ConfirmOrder: ApiRootUrl + 'order/confirm', //确认收货
   OrderExpress: ApiRootUrl + 'order/express', //物流详情
 
   FootprintList: ApiRootUrl + 'footprint/list', //足迹列表
   FootprintDelete: ApiRootUrl + 'footprint/delete', //删除足迹
   Group: ApiRootUrl + 'user/group',
-  Mobile: ApiRootUrl + 'user/number' //获取手机号
+  Mobile: ApiRootUrl + 'index/number', //获取手机号
 };

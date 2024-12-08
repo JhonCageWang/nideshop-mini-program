@@ -39,13 +39,11 @@ Page({
     try {
       wx.setStorageSync('addressId', event.currentTarget.dataset.addressId);
     } catch (e) {
-
     }
-
     //选择该收货地址
-    wx.redirectTo({
-      url: '/pages/shopping/checkout/checkout'
-    })
+    wx.navigateBack({
+      delta: 1 // delta 表示返回的页面数，1 表示返回上一个页面
+    });
   },
   onHide: function () {
     // 页面隐藏
